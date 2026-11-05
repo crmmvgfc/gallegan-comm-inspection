@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MVGFC CCO | Communication Audit and Inspection</title>
+
+  <style>
+    :root {
+      --green: #176b45;
+      --green-dark: #104b35;
+      --teal: #168b83;
+      --blue: #1766a6;
+      --blue-dark: #104b7a;
+      --pale: #eef7f3;
+      --light-blue: #edf5fb;
+      --border: #d8e4df;
+      --text: #263b34;
+      --muted: #66776f;
+      --white: #fff;
+      --danger: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f3f7f5;
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 18px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, var(--green-dark), var(--teal), var(--blue));
+      color: white;
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(20, 75, 55, .15);
+    }
+
+    .hero h1 {
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 20pt;
+      line-height: 1.25;
+      margin: 0 0 8px;
+      letter-spacing: .2px;
+    }
+
+    .hero p { margin: 4px 0; opacity: .94; }
+
+    .document-code {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 12px;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 20px;
+      font-size: 10pt;
+    }
+
+    .notice {
+      background: #fff;
+      border-left: 4px solid var(--teal);
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin: 18px 0;
+      color: #40584e;
+    }
+
+    .section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin: 18px 0;
+      padding: 22px;
+      box-shadow: 0 3px 12px rgba(30, 70, 50, .035);
+    }
+
+    .section h2 {
+      font-family: "Century Gothic", Arial, sans-serif;
+      color: var(--green-dark);
+      font-size: 15pt;
+      margin: 0 0 5px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 10pt;
+      margin: 0 0 18px;
+    }
+
+    .subheading {
+      color: var(--blue-dark);
+      font-weight: bold;
+      margin: 22px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .field { margin-bottom: 14px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label, .field-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #314b40;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid #cbd9d2;
+      border-radius: 7px;
+      font: inherit;
+      font-size: 10.5pt;
+      color: var(--text);
+      background: white;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(22, 139, 131, .18);
+      border-color: var(--teal);
+    }
+
+    textarea { min-height: 76px; resize: vertical; }
+
+    .question {
+      padding: 13px 0;
+      border-bottom: 1px solid #edf1ef;
+    }
+
+    .question:last-child { border-bottom: 0; }
+
+    .question-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .choice-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid #e1eae5;
+      border-radius: 7px;
+      background: #fbfdfc;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    .choice input {
+      width: auto;
+      margin-top: 3px;
+      accent-color: var(--green);
+    }
+
+    .assessment {
+      background: var(--pale);
+      border: 1px solid #d4e8dc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .assessment .choice-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .other-box {
+      display: none;
+      margin-top: 9px;
+    }
+
+    .repeat-card {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 15px;
+      margin: 12px 0;
+      background: #fbfdfc;
+    }
+
+    .repeat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--blue-dark);
+      font-weight: bold;
+    }
+
+    button {
+      border: 0;
+      border-radius: 7px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 10.5pt;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .add-button {
+      background: var(--light-blue);
+      color: var(--blue-dark);
+      border: 1px solid #c9dfef;
+    }
+
+    .remove-button {
+      background: #fff0ee;
+      color: var(--danger);
+      padding: 6px 10px;
+      font-size: 9pt;
+    }
+
+    .submit-button {
+      background: linear-gradient(100deg, var(--green-dark), var(--teal), var(--blue));
+      color: white;
+      padding: 14px 25px;
+      font-size: 11pt;
+      width: 100%;
+    }
+
+    .status {
+      display: none;
+      margin-top: 16px;
+      border-radius: 8px;
+      padding: 15px;
+      background: var(--light-blue);
+      border: 1px solid #c9dfef;
+      overflow-wrap: anywhere;
+    }
+
+    .status.error {
+      background: #fff2f0;
+      border-color: #f2c7c2;
+      color: var(--danger);
+    }
+
+    .status.success {
+      background: #edf8f1;
+      border-color: #c7e6d1;
+      color: var(--green-dark);
+    }
+
+    .result-link {
+      display: inline-block;
+      margin: 7px 12px 0 0;
+      color: var(--blue-dark);
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 9pt;
+      padding: 22px 10px;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 9.5pt;
+    }
+
+    @media (max-width: 700px) {
+      .grid, .choice-list, .assessment .choice-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hero { padding: 22px; }
+      .section { padding: 16px; }
+      .container { padding: 0 10px 25px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .container { margin: 0; max-width: 100%; }
+      button, .footer { display: none; }
+      .section { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="hero">
+    <h1>Communication and Information Dissemination Audit and Inspection</h1>
+    <p><strong>Communication Control Office (CCO)</strong></p>
+    <p>Manuel V. Gallego Foundation Colleges, Inc.</p>
+    <span class="document-code">MVGFC-QF-CCO-022</span>
+  </header>
+
+  <div class="notice">
+    <strong>Purpose of this assessment:</strong>
+    This checklist evaluates institutional communication practices, official
+    messaging platforms, social media and branding compliance, information
+    dissemination, communication documentation, and the support requirements
+    of the concerned office. The CCO monitors communication controls and
+    coordination; originating offices remain accountable for the accuracy and
+    substance of their communications, while authorized signatories retain
+    approval authority.
+
+    <p class="small-note" style="margin-bottom:0">
+      All fields in this assessment are optional. Offices may provide responses
+      only to applicable questions and may leave non-applicable fields blank.
+    </p>
+  </div>
+
+  <form id="auditForm">
+
+    <!-- SECTION A -->
+    <section class="section">
+      <h2>A. Office Information</h2>
+      <p class="section-description">
+        Basic information about the office and assessment.
+      </p>
+
+      <div class="grid">
+
+        <div class="field">
+          <label for="office">Office / Department / Unit</label>
+          <input id="office" placeholder="Enter office or department">
+        </div>
+
+        <div class="field">
+          <label for="representative">Office Representative</label>
+          <input id="representative" placeholder="Full name">
+        </div>
+
+        <div class="field">
+          <label for="position">Position / Designation</label>
+          <input id="position" placeholder="Position or designation">
+        </div>
+
+        <div class="field">
+          <label for="assessmentDate">Date of Assessment</label>
+          <input id="assessmentDate" type="date">
+        </div>
+
+        <div class="field">
+          <label for="assessor">CCO Assessor</label>
+          <input id="assessor" placeholder="Name of CCO assessor">
+        </div>
+
+        <div class="field">
+          <label for="assessmentType">Assessment Type</label>
+          <select id="assessmentType">
+            <option value="">Select assessment type</option>
+            <option>Initial</option>
+            <option>Periodic</option>
+            <option>Follow-up</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION B -->
+    <section class="section">
+      <h2>B. Official Messaging Platform Review</h2>
+      <p class="section-description">
+        Review the office's use of Microsoft Teams and other official
+        communication platforms.
+      </p>
+
+      <div id="questionsB"></div>
+      <div id="ratingB"></div>
+    </section>
+
+    <!-- SECTION C -->
+    <section class="section">
+      <h2>C. Social Media and Branding Compliance</h2>
+      <p class="section-description">
+        Review publicly accessible institutional accounts and the office's
+        coordination with the appropriate communication and marketing units.
+      </p>
+
+      <div id="questionsC"></div>
+
+      <div class="subheading">
+        Publicly Accessible Pages / Accounts Reviewed
+      </div>
+
+      <div id="pagesContainer"></div>
+
+      <button type="button" class="add-button" onclick="addPage()">
+        + Add Page / Account
+      </button>
+
+      <div id="ratingC"></div>
+    </section>
+
+    <!-- SECTION D -->
+    <section class="section">
+      <h2>D. Information Dissemination Practices</h2>
+      <p class="section-description">
+        Review how the office prepares, distributes, acknowledges, and records
+        institutional information and announcements.
+      </p>
+
+      <div id="questionsD"></div>
+
+      <div class="subheading">
+        Communication Channels Currently Used
+      </div>
+
+      <div id="channelsContainer" class="choice-list"></div>
+
+      <div id="channelsOther" class="other-box">
+        <label for="channelsOtherText">
+          Please specify other communication channel/s
+        </label>
+        <input id="channelsOtherText">
+      </div>
+
+      <div id="ratingD"></div>
+    </section>
+
+    <!-- SECTION E -->
+    <section class="section">
+      <h2>E. CCO Assistance and Support Requirements</h2>
+      <p class="section-description">
+        Identify the assistance, orientation, coordination, and monitoring
+        mechanisms needed by the concerned office.
+      </p>
+
+      <div id="questionsE"></div>
+
+      <div class="subheading">
+        Support / Assistance Required
+      </div>
+
+      <div id="supportContainer" class="choice-list"></div>
+
+      <div id="supportOther" class="other-box">
+        <label for="supportOtherText">
+          Please specify other support requirements
+        </label>
+        <input id="supportOtherText">
+      </div>
+    </section>
+
+    <!-- SECTION F -->
+    <section class="section">
+      <h2>F. Consolidated Audit and Inspection Findings</h2>
+      <p class="section-description">
+        Record the consolidated findings of the assessment for each major area.
+      </p>
+
+      <div id="findingsContainer"></div>
+
+      <div class="field">
+        <label for="overallAssessment">Overall Assessment</label>
+        <select id="overallAssessment">
+          <option value="">Select overall assessment</option>
+          <option>Satisfactory</option>
+          <option>Satisfactory with Areas for Improvement</option>
+          <option>Requires Corrective Action</option>
+          <option>Requires Management Intervention</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- SECTION G -->
+    <section class="section">
+      <h2>G. Recommended Actions</h2>
+      <p class="section-description">
+        Document identified gaps, recommended actions, responsible offices,
+        target dates, and follow-up status.
+      </p>
+
+      <div id="actionsContainer"></div>
+
+      <button type="button" class="add-button" onclick="addAction()">
+        + Add Recommended Action
+      </button>
+    </section>
+
+    <!-- SECTION H -->
+    <section class="section">
+      <h2>H. Acknowledgment</h2>
+      <p class="section-description">
+        The undersigned acknowledge that the assessment was conducted for
+        institutional communication monitoring, coordination, and improvement.
+        Acknowledgment does not automatically signify agreement with every finding.
+      </p>
+
+      <div class="grid">
+
+        <div class="field">
+          <label for="ackRepresentative">
+            Assessed Office Representative
+          </label>
+          <input id="ackRepresentative" placeholder="Full name">
+        </div>
+
+        <div class="field">
+          <label for="ackDesignation">Designation</label>
+          <input id="ackDesignation" placeholder="Position / designation">
+        </div>
+
+        <div class="field">
+          <label for="ackDate">Date</label>
+          <input id="ackDate" type="date">
+        </div>
+
+        <div class="field">
+          <label for="ackAssessor">CCO Assessor</label>
+          <input id="ackAssessor" placeholder="Full name">
+        </div>
+
+        <div class="field">
+          <label for="ackAssessorDesignation">
+            CCO Assessor Designation
+          </label>
+          <input id="ackAssessorDesignation"
+            value="Communication Control Office">
+        </div>
+
+        <div class="field">
+          <label for="ackAssessorDate">Assessor Date</label>
+          <input id="ackAssessorDate" type="date">
+        </div>
+
+      </div>
+
+      <p class="small-note">
+        Names and dates entered above will be included in the electronic
+        assessment record. Physical signatures may be completed on the
+        generated PDF when required.
+      </p>
+    </section>
+
+    <!-- SUBMISSION -->
+    <section class="section">
+
+      <button id="submitButton" type="submit" class="submit-button">
+        Submit Audit and Generate PDF
+      </button>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    </section>
+
+  </form>
+
+  <footer class="footer">
+    Developed by MV Gallego CCO © 2026
+  </footer>
+
+</div>
+
+<script>
+
+  /*
+    GOOGLE APPS SCRIPT WEB APP
+    Submission is processed through google.script.run.
+  */
+
+  const DATABASE_WEB_APP_URL =
+    "https://script.google.com/macros/s/AKfycbykDFd2-JDNWtVAlwUxGRS4Z7V9a8vv0OCHeICfgrLYWc4ww0J-Sk7j3w8i4_zQzNhD1g/exec";
+
+
+  const RATINGS = [
+    "Compliant",
+    "Partially Compliant",
+    "Noncompliant",
+    "Not Applicable",
+    "For Improvement"
+  ];
+
+
+  const questions = {
+
+    B: [
+      "Does the office use Microsoft Teams for official institutional communication?",
+      "How frequently does the office use Microsoft Teams?",
+      "For what purposes does the office use Microsoft Teams?",
+      "Does the office use other messaging or communication platforms for official transactions?",
+      "Are personnel familiar with the institution's official messaging platforms?",
+      "Do concerned personnel have appropriate access to the official messaging platforms?",
+      "What difficulties does the office experience when using official messaging platforms?",
+      "Would the office benefit from a standardized Microsoft Teams group or communication channel?"
+    ],
+
+    C: [
+      "Does the office maintain or manage an official social media account or page?",
+      "Which social media platforms are used or maintained by the office?",
+      "Who is responsible for managing, updating, or publishing content on these accounts?",
+      "Are personnel familiar with the institution's branding and social media guidelines?",
+      "Are institutional logos, colors, and visual identity used consistently?",
+      "Does the office use approved institutional templates for announcements and publicity materials?",
+      "Are institutional names, contact details, program information, and other details accurate?",
+      "Does the office coordinate with Marketing and relevant event or communication units before publication?",
+      "What difficulties or concerns does the office encounter in managing its social media presence?"
+    ],
+
+    D: [
+      "How does the office disseminate official announcements and information?",
+      "What channels are commonly used to communicate with personnel, students, or other stakeholders?",
+      "How does the office determine which communication channel should be used?",
+      "How does the office confirm that recipients have received important announcements?",
+      "Does the office require acknowledgment or confirmation for important communications?",
+      "How are urgent announcements or time-sensitive information disseminated?",
+      "How does the office coordinate communications with other institutional offices?",
+      "Does the office maintain records or evidence of information dissemination?",
+      "What delays, gaps, or communication problems are commonly encountered?",
+      "What improvements would help the office disseminate information more effectively?"
+    ],
+
+    E: [
+      "What communication-related difficulties does the office currently experience?",
+      "Would the office benefit from standardized communication channels and procedures?",
+      "Would the office benefit from an official Microsoft Teams group or orientation?",
+      "Would standardized announcement and communication templates be useful?",
+      "Does the office need assistance in monitoring the dissemination and acknowledgment of announcements?",
+      "Would improved interdepartmental communication coordination be beneficial?",
+      "Would centralized communication monitoring or ticketing improve the office's coordination and follow-up?"
+    ]
+
+  };
+
+
+  const channels = [
+    "Official Institutional Email",
+    "Microsoft Teams",
+    "Gallegan XP",
+    "Learning Management System (LMS)",
+    "Official Social Media Pages",
+    "Group Messaging Applications",
+    "Memoranda / Official Notices",
+    "Printed Announcements / Bulletin Boards",
+    "SMS / Telephone Calls",
+    "Meetings / Verbal Coordination",
+    "Other"
+  ];
+
+
+  const supportOptions = [
+    "Official Messaging Platform Orientation",
+    "Microsoft Teams Utilization",
+    "Social Media Branding Coordination",
+    "Standardized Announcement Templates",
+    "LMS Usage on Announcement",
+    "Gallegan XP for Feedback and Complaints",
+    "Official Communication Procedures",
+    "Dissemination and Acknowledgment Monitoring",
+    "Interdepartmental Communication Coordination",
+    "Communication Documentation and Records",
+    "Ticketing and Follow-up Mechanism",
+    "Other"
+  ];
+
+
+  const findingAreas = [
+    "Official Messaging Platform",
+    "Social Media and Branding",
+    "Information Dissemination",
+    "Communication Documentation",
+    "CCO Support Requirements"
+  ];
+
+
+  function escapeHtml(value) {
+
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char];
+
+    });
+
+  }
+
+
+  // RENDER QUESTIONS
+
+  function renderQuestions(section) {
+
+    const target = document.getElementById("questions" + section);
+
+    target.innerHTML = questions[section].map((question, index) => {
+
+      const number = index + 1;
+      const id = section + "_" + number;
+
+      return `
+        <div class="question">
+
+          <div class="question-title">
+            ${number}. ${escapeHtml(question)}
+          </div>
+
+          <textarea
+            id="${id}"
+            data-section="${section}"
+            data-number="${number}"
+            data-question="${escapeHtml(question)}"
+            placeholder="Enter response or observations (optional)...">
+          </textarea>
+
+        </div>
+      `;
+
+    }).join("");
+
+
+    if (section !== "E") {
+
+      document.getElementById("rating" + section).innerHTML = `
+
+        <div class="assessment">
+
+          <label for="rating_${section}">
+            Section ${section} Assessment
+          </label>
+
+          <select id="rating_${section}">
+
+            <option value="">Select assessment (optional)</option>
+
+            ${RATINGS.map(r => `<option>${r}</option>`).join("")}
+
+          </select>
+
+          <div class="field" style="margin:10px 0 0">
+
+            <label for="ratingRemarks_${section}">
+              Assessment Remarks
+            </label>
+
+            <textarea
+              id="ratingRemarks_${section}"
+              placeholder="Enter assessment remarks (optional)...">
+            </textarea>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+  // CHECKBOX RENDERER
+
+  function renderCheckboxes(targetId, options, prefix, otherContainerId) {
+
+    const target = document.getElementById(targetId);
+
+    target.innerHTML = options.map((option, index) => {
+
+      const id = prefix + "_" + index;
+
+      return `
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            id="${id}"
+            value="${escapeHtml(option)}"
+            data-group="${prefix}">
+
+          <span>${escapeHtml(option)}</span>
+
+        </label>
+
+      `;
+
+    }).join("");
+
+
+    const other = options.indexOf("Other");
+
+    if (other >= 0 && otherContainerId) {
+
+      document.getElementById(prefix + "_" + other)
+        .addEventListener("change", e => {
+
+          document.getElementById(otherContainerId).style.display =
+            e.target.checked ? "block" : "none";
+
+        });
+
+    }
+
+  }
+
+
+  // ADD PUBLIC PAGE
+
+  function addPage() {
+
+    const container = document.getElementById("pagesContainer");
+
+    const index = container.children.length + 1;
+
+    const card = document.createElement("div");
+
+    card.className = "repeat-card";
+
+    card.innerHTML = `
+
+      <div class="repeat-header">
+
+        <span>Page / Account ${index}</span>
+
+        <button
+          type="button"
+          class="remove-button"
+          onclick="this.closest('.repeat-card').remove(); renumberPages();">
+
+          Remove
+
+        </button>
+
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>Page / Account Name</label>
+
+          <input
+            class="page-name"
+            placeholder="Name of page or account">
+
+        </div>
+
+        <div class="field">
+
+          <label>Platform</label>
+
+          <input
+            class="page-platform"
+            placeholder="Facebook, Instagram, etc.">
+
+        </div>
+
+        <div class="field full">
+
+          <label>Public URL / Link</label>
+
+          <input
+            class="page-url"
+            type="url"
+            placeholder="https://">
+
+        </div>
+
+        <div class="field full">
+
+          <label>Observations / Remarks</label>
+
+          <textarea
+            class="page-remarks"
+            placeholder="Enter observations...">
+          </textarea>
+
+        </div>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  }
+
+
+  function renumberPages() {
+
+    document.querySelectorAll("#pagesContainer .repeat-card")
+      .forEach((card, i) => {
+
+        card.querySelector(".repeat-header span").textContent =
+          "Page / Account " + (i + 1);
+
+      });
+
+  }
+
+
+  // ADD RECOMMENDED ACTION
+
+  function addAction() {
+
+    const container = document.getElementById("actionsContainer");
+
+    const index = container.children.length + 1;
+
+    const card = document.createElement("div");
+
+    card.className = "repeat-card";
+
+    card.innerHTML = `
+
+      <div class="repeat-header">
+
+        <span>Recommended Action ${index}</span>
+
+        <button
+          type="button"
+          class="remove-button"
+          onclick="this.closest('.repeat-card').remove(); renumberActions();">
+
+          Remove
+
+        </button>
+
+      </div>
+
+      <div class="grid">
+
+        <div class="field full">
+
+          <label>Identified Gap / Concern</label>
+
+          <textarea
+            class="action-gap"
+            placeholder="Describe the identified gap or concern">
+          </textarea>
+
+        </div>
+
+        <div class="field full">
+
+          <label>Recommended Action</label>
+
+          <textarea
+            class="action-recommendation"
+            placeholder="Describe the recommended action">
+          </textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label>Responsible Office</label>
+
+          <input
+            class="action-office"
+            placeholder="Responsible office or unit">
+
+        </div>
+
+        <div class="field">
+
+          <label>Target Date</label>
+
+          <input
+            class="action-date"
+            type="date">
+
+        </div>
+
+        <div class="field full">
+
+          <label>Follow-up Status</label>
+
+          <select class="action-status">
+
+            <option value="">Select status</option>
+            <option>Not Yet Started</option>
+            <option>For Coordination</option>
+            <option>Ongoing</option>
+            <option>For Verification</option>
+            <option>Completed</option>
+            <option>Escalated</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  }
+
+
+  function renumberActions() {
+
+    document.querySelectorAll("#actionsContainer .repeat-card")
+      .forEach((card, i) => {
+
+        card.querySelector(".repeat-header span").textContent =
+          "Recommended Action " + (i + 1);
+
+      });
+
+  }
+
+
+  // FINDINGS
+
+  function renderFindings() {
+
+    document.getElementById("findingsContainer").innerHTML =
+
+      findingAreas.map((area, index) => `
+
+        <div class="repeat-card">
+
+          <strong>${escapeHtml(area)}</strong>
+
+          <div class="field" style="margin-top:12px">
+
+            <label>Finding / Assessment Result</label>
+
+            <select class="finding-result"
+              data-area="${escapeHtml(area)}">
+
+              <option value="">Select result (optional)</option>
+
+              ${RATINGS.map(r => `<option>${r}</option>`).join("")}
+
+            </select>
+
+          </div>
+
+          <div class="field">
+
+            <label>Remarks / Supporting Observations</label>
+
+            <textarea
+              class="finding-remarks"
+              placeholder="Enter findings and observations...">
+            </textarea>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  // SELECTED CHECKBOX VALUES
+
+  function selectedValues(prefix) {
+
+    return Array.from(document.querySelectorAll(
+      'input[data-group="' + prefix + '"]:checked'
+    )).map(input => input.value);
+
+  }
+
+
+  // COLLECT ANSWERS
+
+  function collectAnswers() {
+
+    const answers = [];
+
+    ["B", "C", "D", "E"].forEach(section => {
+
+      document.querySelectorAll(
+        'textarea[data-section="' + section + '"]'
+      ).forEach(input => {
+
+        answers.push({
+
+          section: section,
+          number: input.dataset.number,
+          question: input.dataset.question,
+          response: input.value.trim()
+
+        });
+
+      });
+
+
+      const rating = document.getElementById("rating_" + section);
+
+      if (rating) {
+
+        answers.push({
+
+          section: section,
+          number: "ASSESSMENT",
+          question: "Section " + section + " Assessment",
+          response: rating.value
+
+        });
+
+
+        answers.push({
+
+          section: section,
+          number: "ASSESSMENT REMARKS",
+          question: "Section " + section + " Assessment Remarks",
+          response: document.getElementById(
+            "ratingRemarks_" + section
+          ).value.trim()
+
+        });
+
+      }
+
+    });
+
+
+    answers.push({
+
+      section: "D",
+      number: "CHANNELS",
+      question: "Communication Channels Currently Used",
+
+      response: selectedValues("channel").join(", ") +
+
+        (document.getElementById("channelsOtherText").value.trim()
+          ? " | Other: " +
+            document.getElementById("channelsOtherText").value.trim()
+          : "")
+
+    });
+
+
+    answers.push({
+
+      section: "E",
+      number: "SUPPORT",
+      question: "Support / Assistance Required",
+
+      response: selectedValues("support").join(", ") +
+
+        (document.getElementById("supportOtherText").value.trim()
+          ? " | Other: " +
+            document.getElementById("supportOtherText").value.trim()
+          : "")
+
+    });
+
+
+    return answers;
+
+  }
+
+
+  // COLLECT PUBLIC PAGES
+
+  function collectPages() {
+
+    return Array.from(
+      document.querySelectorAll("#pagesContainer .repeat-card")
+    )
+
+    .map(card => ({
+
+      name: card.querySelector(".page-name").value.trim(),
+      platform: card.querySelector(".page-platform").value.trim(),
+      url: card.querySelector(".page-url").value.trim(),
+      remarks: card.querySelector(".page-remarks").value.trim()
+
+    }))
+
+    .filter(page =>
+      page.name || page.platform || page.url || page.remarks
+    );
+
+  }
+
+
+  // COLLECT FINDINGS
+
+  function collectFindings() {
+
+    return Array.from(
+      document.querySelectorAll("#findingsContainer .repeat-card")
+    )
+
+    .map(card => ({
+
+      area: card.querySelector(".finding-result").dataset.area,
+      result: card.querySelector(".finding-result").value,
+      remarks: card.querySelector(".finding-remarks").value.trim()
+
+    }));
+
+  }
+
+
+  // COLLECT ACTIONS
+
+  function collectActions() {
+
+    return Array.from(
+      document.querySelectorAll("#actionsContainer .repeat-card")
+    )
+
+    .map(card => ({
+
+      gap: card.querySelector(".action-gap").value.trim(),
+
+      action: card.querySelector(".action-recommendation").value.trim(),
+
+      office: card.querySelector(".action-office").value.trim(),
+
+      targetDate: card.querySelector(".action-date").value,
+
+      status: card.querySelector(".action-status").value
+
+    }))
+
+    .filter(action =>
+      action.gap ||
+      action.action ||
+      action.office ||
+      action.targetDate ||
+      action.status
+    );
+
+  }
+
+
+  // GET FIELD VALUE
+
+  function getValue(id) {
+
+    return document.getElementById(id).value.trim();
+
+  }
+
+
+  // BUILD SUBMISSION PAYLOAD
+
+  function buildPayload() {
+
+    const pages = collectPages();
+
+    const channels = selectedValues("channel");
+
+    const channelOther = getValue("channelsOtherText");
+
+    if (channels.includes("Other") && channelOther) {
+
+      channels.push("Other: " + channelOther);
+
+    }
+
+
+    const support = selectedValues("support");
+
+    const supportOther = getValue("supportOtherText");
+
+    if (support.includes("Other") && supportOther) {
+
+      support.push("Other: " + supportOther);
+
+    }
+
+
+    return {
+
+      office: getValue("office"),
+
+      representative: getValue("representative"),
+
+      position: getValue("position"),
+
+      assessmentDate: getValue("assessmentDate"),
+
+      assessor: getValue("assessor"),
+
+      assessmentType: getValue("assessmentType"),
+
+      overallAssessment: getValue("overallAssessment"),
+
+
+      publicPages: pages,
+
+      channels: channels,
+
+      supportRequirements: support,
+
+
+      answers: collectAnswers(),
+
+      findings: collectFindings(),
+
+      actions: collectActions(),
+
+
+      acknowledgment: {
+
+        representative: getValue("ackRepresentative"),
+
+        designation: getValue("ackDesignation"),
+
+        date: getValue("ackDate"),
+
+        assessor: getValue("ackAssessor"),
+
+        assessorDesignation: getValue("ackAssessorDesignation"),
+
+        assessorDate: getValue("ackAssessorDate")
+
+      }
+
+    };
+
+  }
+
+
+  // DISPLAY SUBMISSION STATUS
+
+  function showStatus(message, type, links) {
+
+    const status = document.getElementById("status");
+
+    status.className = "status " + type;
+
+    status.style.display = "block";
+
+    status.innerHTML = message;
+
+
+    if (links) {
+
+      if (links.pdfUrl) {
+
+        status.innerHTML += `
+
+          <br>
+
+          <a class="result-link"
+            target="_blank"
+            rel="noopener"
+            href="${escapeHtml(links.pdfUrl)}">
+
+            Open Individual PDF Ticket
+
+          </a>
+
+        `;
+
+      }
+
+
+      if (links.excelUrl) {
+
+        status.innerHTML += `
+
+          <br>
+
+          <a class="result-link"
+            target="_blank"
+            rel="noopener"
+            href="${escapeHtml(links.excelUrl)}">
+
+            Download Excel Database Export
+
+          </a>
+
+        `;
+
+      }
+
+    }
+
+
+    status.scrollIntoView({
+
+      behavior: "smooth",
+      block: "center"
+
+    });
+
+  }
+
+
+  // FORM SUBMISSION
+  // NO MANDATORY FIELD VALIDATION
+
+  document.getElementById("auditForm")
+    .addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+
+      // Verify Apps Script connection only.
+
+      if (typeof google === "undefined" ||
+          !google.script ||
+          !google.script.run) {
+
+        showStatus(
+
+          "The Apps Script connection is unavailable. Please open this form through the deployed Google Apps Script web app URL.",
+
+          "error"
+
+        );
+
+        return;
+
+      }
+
+
+      const button = document.getElementById("submitButton");
+
+      button.disabled = true;
+
+      button.textContent = "Submitting Audit...";
+
+
+      showStatus(
+
+        "Submitting the audit record and generating the individual PDF ticket. Please wait.",
+
+        ""
+
+      );
+
+
+      const payload = buildPayload();
+
+
+      google.script.run
+
+        .withSuccessHandler(function(result) {
+
+          button.disabled = false;
+
+          button.textContent = "Submit Audit and Generate PDF";
+
+
+          if (!result) {
+
+            showStatus(
+
+              "The server returned an empty response. Please check the Apps Script execution log.",
+
+              "error"
+
+            );
+
+            return;
+
+          }
+
+
+          const code =
+            result.code ||
+            result.checklistCode ||
+            "Submission completed";
+
+
+          showStatus(
+
+            "<strong>Audit submitted successfully.</strong><br>" +
+
+            "Checklist Code: <strong>" +
+            escapeHtml(code) +
+            "</strong><br>" +
+
+            "Your submission has been processed by the CCO database.",
+
+            "success",
+
+            {
+
+              pdfUrl: result.pdfUrl,
+
+              excelUrl: result.excelUrl
+
+            }
+
+          );
+
+        })
+
+
+        .withFailureHandler(function(error) {
+
+          button.disabled = false;
+
+          button.textContent = "Submit Audit and Generate PDF";
+
+
+          const message = error && error.message
+
+            ? error.message
+
+            : String(error || "Unknown server error");
+
+
+          showStatus(
+
+            "<strong>Submission failed.</strong><br>" +
+
+            escapeHtml(message) +
+
+            "<br>Please check the Apps Script execution log and database permissions.",
+
+            "error"
+
+          );
+
+        })
+
+
+        .submitAudit(payload);
+
+    });
+
+
+  // INITIAL PAGE SETUP
+
+  ["B", "C", "D", "E"].forEach(renderQuestions);
+
+
+  renderCheckboxes(
+    "channelsContainer",
+    channels,
+    "channel",
+    "channelsOther"
+  );
+
+
+  renderCheckboxes(
+    "supportContainer",
+    supportOptions,
+    "support",
+    "supportOther"
+  );
+
+
+  renderFindings();
+
+
+  // Initial blank cards
+
+  addPage();
+
+  addAction();
+
+
+  // DEFAULT ASSESSMENT DATES
+
+  const today = new Date();
+
+  const localDate = new Date(
+    today.getTime() - today.getTimezoneOffset() * 60000
+  ).toISOString().slice(0, 10);
+
+
+  document.getElementById("assessmentDate").value = localDate;
+
+  document.getElementById("ackDate").value = localDate;
+
+  document.getElementById("ackAssessorDate").value = localDate;
+
+
+  // SYNCHRONIZE ACKNOWLEDGMENT NAMES
+
+  document.getElementById("representative")
+    .addEventListener("input", e => {
+
+      document.getElementById("ackRepresentative").value =
+        e.target.value;
+
+    });
+
+
+  document.getElementById("assessor")
+    .addEventListener("input", e => {
+
+      document.getElementById("ackAssessor").value =
+        e.target.value;
+
+    });
+
+</script>
+
+</body>
+</html>
